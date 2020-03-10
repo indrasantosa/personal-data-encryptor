@@ -7,7 +7,9 @@ export const FrontendRoutes: Route = {
   apiTest: '/test',
   dashboard: '/dashboard',
   dashboardCfd: '/dashboard/cfd',
-  dashboardFxRates: '/dashboard/fx-rates'
+  dashboardFxRates: '/dashboard/fx-rates',
+  dashboardPersonalInfo: '/dashboard/personal-info',
+  dashboardPersonalInfoCreate: '/dashboard/personal-info/create'
 };
 
 export const APIRoutes: Route = {

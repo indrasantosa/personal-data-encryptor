@@ -3,6 +3,7 @@ import Koa from 'koa';
 import path from 'path';
 import serveStatic from 'koa-static';
 import bodyParser from 'koa-bodyparser';
+import koaBody from 'koa-body';
 
 import createApplicationRouter from './routes';
 import spaPlugins from './middlewares/spaPlugins';
@@ -18,8 +19,9 @@ const createApp = async () => {
   const app = new Koa();
 
   // Add application middlewares
-  app.use(bodyParser);
   app.use(spaPlugins);
+  app.use(koaBody({ multipart: true }));
+  // app.use(bodyParser());
 
   // Add application routes
   app.use(createApplicationRouter().routes());
