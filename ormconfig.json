@@ -1,0 +1,18 @@
+{
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5432,
+  "username": "indrasantosa",
+  "password": "",
+  "database": "slaters",
+  "synchronize": true,
+  "logging": false,
+  "entities": ["src/common/entity/**/*.ts"],
+  "migrations": ["src/common/migration/**/*.ts"],
+  "subscribers": ["src/common/subscriber/**/*.ts"],
+  "cli": {
+    "entitiesDir": "src/common/entity",
+    "migrationsDir": "src/common/migration",
+    "subscribersDir": "src/common/subscriber"
+  }
+}
