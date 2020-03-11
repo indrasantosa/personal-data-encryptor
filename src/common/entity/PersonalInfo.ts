@@ -12,6 +12,7 @@ import {
 import { uuid } from 'uuidv4';
 import { createHash } from 'crypto';
 import { PersonalFile } from './PersonalFile';
+import { encryptString, decryptString } from '../utils/encrypt';
 
 @Entity()
 export class PersonalInfo {
@@ -66,5 +67,23 @@ export class PersonalInfo {
     return (
       this.hashedEncryptionKey === hash.update(encryptionKey).digest('base64')
     );
+  }
+
+  /**
+   * Encrypt stringify user data
+   * @param {string} userInfo - stringified user data
+   */
+  encryptContent(userInfo: string, encryptionKey: string) {
+    const hash = createHash('sha256');
+    this.encryptedContent = encryptString(encryptionKey, userInfo);
+    this.hashedEncryptionKey = hash.update(encryptionKey).digest('base64');
+  }
+
+  /**
+   * Decrypt stored user data
+   * @param {string} userInfo - stringified user data
+   */
+  decryptContent(encryptionKey: string) {
+    return decryptString(encryptionKey, this.encryptedContent);
   }
 }

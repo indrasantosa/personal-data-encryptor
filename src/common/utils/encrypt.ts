@@ -1,15 +1,15 @@
-import { Cipher, Decipher, createCipher, createDecipher } from 'crypto';
-import fs from 'fs';
-import { File } from 'formidable';
+import { createCipher, createDecipher } from 'crypto';
 
 const algorithm = 'aes-256-ctr';
+const Duplex = require('stream').Duplex;
 
-export const encryptFile = (password: string, file: File): Promise<Buffer> => {
+export const encryptFile = (
+  password: string,
+  inputStream: any
+): Promise<string> => {
   return new Promise((resolve, reject) => {
     const cipher = createCipher(algorithm, password);
-
-    const fileStream = fs.createReadStream(file.path);
-    const encryptedFileStream = fileStream.pipe(cipher);
+    const encryptedFileStream = inputStream.pipe(cipher);
     let buffer: Array<Buffer> = [];
     encryptedFileStream.on('readable', () => {
       let data = encryptedFileStream.read();
@@ -20,17 +20,23 @@ export const encryptFile = (password: string, file: File): Promise<Buffer> => {
     });
     encryptedFileStream.on('end', () => {
       // console.log(buffer.length);
-      resolve(Buffer.concat(buffer));
+      resolve(JSON.stringify(buffer.map(buf => buf.toString('base64'))));
     });
   });
 };
 
-export const getCipher = (password: string): Cipher => {
-  return createCipher(algorithm, password);
-};
-
-export const getDecipher = (password: string): Decipher => {
-  return createDecipher(algorithm, password);
+export const decryptFile = (password: string, encrpytedFile: string): any => {
+  const decipher = createDecipher(algorithm, password);
+  const encrpytedFileParts = JSON.parse(encrpytedFile).map(
+    (part: string) => new Buffer(part, 'base64')
+  );
+  const stream = new Duplex();
+  // eslint-disable-next-line array-callback-return
+  encrpytedFileParts.map((bufferParts: Buffer): void => {
+    stream.push(bufferParts);
+  });
+  stream.push(null);
+  return stream.pipe(decipher);
 };
 
 export const encryptString = (

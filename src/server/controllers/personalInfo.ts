@@ -1,6 +1,7 @@
 import { Context, Next } from 'koa';
 import { getManager } from 'typeorm';
-import { encryptFile, encryptString } from '../../common/utils/encrypt';
+import fs from 'fs';
+import { encryptFile } from '../../common/utils/encrypt';
 import { PersonalInfo } from '../../common/entity/PersonalInfo';
 import { PersonalFile } from '../../common/entity/PersonalFile';
 import { BadRequestError, UnauthorizedError } from '../../common/utils/errors';
@@ -30,26 +31,30 @@ export default {
     const newPersonalFile = new PersonalFile();
     if (files && files.file) {
       const file = files.file;
-      const fileBuffer = await encryptFile('password', files.file);
+      console.log(files.file);
+      const fileStream = fs.createReadStream(file.path);
+      const encryptedFile = await encryptFile(
+        newPersonalInfoPayload.encryptionKey,
+        fileStream
+      );
 
       newPersonalFile.fileName = file.name;
       newPersonalFile.type = file.type;
-      newPersonalFile.encryptedContent = fileBuffer.toString('base64');
+      newPersonalFile.encryptedContent = encryptedFile;
       await personalFileRepository.save(newPersonalFile);
     }
 
     const newPersonalInfo = new PersonalInfo();
     newPersonalInfo.label = newPersonalInfoPayload.label;
-    newPersonalInfo.encryptedContent = encryptString(
-      newPersonalInfoPayload.encryptionKey,
+    newPersonalInfo.encryptContent(
       JSON.stringify({
         firstName: newPersonalInfoPayload.firstName,
         lastName: newPersonalInfoPayload.lastName
-      })
+      }),
+      newPersonalInfoPayload.encryptionKey
     );
 
     try {
-      newPersonalInfo.setEncryptionKey(ctx.request.body.encryptionKey);
       newPersonalInfo.file = newPersonalFile;
       const insertedRow = await personalInfoRepository.save(newPersonalInfo);
       ctx.status = 200;
@@ -61,7 +66,24 @@ export default {
       throw new BadRequestError(e.message);
     }
   },
-  getPersonalId: async (ctx: Context, next: Next) => {
+  retrieve: async (ctx: Context, next: Next) => {
+    try {
+      const secretPayload = ctx.personalInfo.decryptContent(
+        ctx.request.body?.encryptionKey
+      );
+      ctx.status = 200;
+      ctx.body = {
+        status: 'success',
+        data: {
+          label: ctx.personalInfo.label,
+          secret: JSON.parse(secretPayload)
+        }
+      };
+    } catch (e) {
+      throw new BadRequestError(e.message);
+    }
+  },
+  getPersonalInfoId: async (ctx: Context, next: Next) => {
     const personalInfoRepository = getManager().getRepository(PersonalInfo);
 
     const personalInfoId = ctx.params.personalInfoId;
