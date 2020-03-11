@@ -1,4 +1,4 @@
-import { createCipher, createDecipher } from 'crypto';
+import { createCipher, createDecipher, randomBytes } from 'crypto';
 
 const algorithm = 'aes-256-ctr';
 const Duplex = require('stream').Duplex;

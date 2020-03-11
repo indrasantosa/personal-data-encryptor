@@ -3,16 +3,17 @@ import {
   PrimaryColumn,
   Column,
   BeforeInsert,
-  BeforeUpdate,
   CreateDateColumn,
   UpdateDateColumn,
   OneToOne,
-  JoinColumn
+  JoinColumn,
+  OneToMany
 } from 'typeorm';
 import { uuid } from 'uuidv4';
 import { createHash } from 'crypto';
 import { PersonalFile } from './PersonalFile';
 import { encryptString, decryptString } from '../utils/encrypt';
+import { InfoShare } from './InfoShare';
 
 @Entity()
 export class PersonalInfo {
@@ -27,6 +28,12 @@ export class PersonalInfo {
 
   @Column()
   hashedEncryptionKey: string;
+
+  @OneToMany(
+    type => InfoShare,
+    infoShare => infoShare.personalInfo
+  )
+  shareLinks: InfoShare[];
 
   @OneToOne(type => PersonalFile, { eager: true })
   @JoinColumn()

@@ -57,16 +57,7 @@ test('decrypt should convert a decrypted file string to stream', async t => {
   writeFileSync(encryptedFilePath, encryptedFile);
   const originalFileStream = decryptFile(key, encryptedFile);
   originalFileStream.pipe(outputStream);
-});
-
-test('decrypt should return the content back', async t => {
-  const inputFile = path.resolve(__dirname, '../../../test/assets/sample.txt');
-  const sampleFile =
-    '/var/folders/zf/6pvch9l136z2ffnzpk0k66c00000gn/T/upload_2388287b6ca0f21fa13c76694338bab1';
-  const inputStream = createReadStream(inputFile);
-  const sampleStream = createReadStream(sampleFile);
-  const encryptedInput = await encryptFile('key', inputStream);
-  const encryptedSample = await encryptFile('key', sampleStream);
-  t.is(encryptedInput, encryptedSample);
-  console.log(encryptedInput);
+  const outputReadStream = createReadStream(outputFile);
+  const encryptedOutputFile = await encryptFile(key, outputReadStream);
+  t.is(encryptedFile, encryptedOutputFile);
 });
