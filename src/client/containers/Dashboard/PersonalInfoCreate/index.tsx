@@ -16,7 +16,9 @@ const FxRates = () => {
   const sendForm = e => {
     e.preventDefault();
     const data = {
-      name,
+      firstName: name,
+      lastName: 'lastname',
+      encryptionKey: 'key',
       file: attachedFile
     };
     console.log(data);

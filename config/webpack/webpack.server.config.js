@@ -31,6 +31,7 @@ module.exports = {
     rules: [
       {
         test: /\.ts$/,
+        exclude: '/**/*.test.ts',
         use: {
           loader: 'ts-loader',
           options: {

@@ -4,7 +4,8 @@ import {
   CREATE_PERSONAL_INFO_REQUEST,
   CREATE_PERSONAL_INFO_SUCCESS,
   CREATE_PERSONAL_INFO_FAILURE,
-  CreatePersonalInfoPageTypes
+  CreatePersonalInfoPageTypes,
+  PersonalInfoForm
 } from './types';
 import { APIRoutes } from '../../../enums/routes';
 
@@ -19,13 +20,15 @@ export const createPersonalInfoFailure = () => ({
   type: CREATE_PERSONAL_INFO_FAILURE
 });
 
-export const createPersonalInfo = personalInfoForm => async (
-  dispatch: Dispatch
-) => {
+export const createPersonalInfo = (
+  personalInfoForm: PersonalInfoForm
+) => async (dispatch: Dispatch) => {
   try {
     dispatch(createPersonalInfoRequest());
     const formData = new FormData();
-    formData.append('name', personalInfoForm.name);
+    formData.append('firstName', personalInfoForm.firstName);
+    formData.append('lastName', personalInfoForm.lastName);
+    formData.append('encryptionKey', personalInfoForm.encryptionKey);
     formData.append('file', personalInfoForm.file);
     const response = await Axios.post(APIRoutes.personalInfo, formData, {
       headers: {

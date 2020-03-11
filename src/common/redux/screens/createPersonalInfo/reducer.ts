@@ -1,15 +1,9 @@
 import {
-  FxRatesPageTypes,
-  FX_LIST_REQUEST,
-  FX_LIST_SUCCESS,
-  FX_LIST_FAILURE
+  CREATE_PERSONAL_INFO_REQUEST,
+  CREATE_PERSONAL_INFO_SUCCESS,
+  CREATE_PERSONAL_INFO_FAILURE,
+  CreatePersonalInfoPageTypes
 } from './types';
-
-interface Message {
-  userName: string;
-  password: string;
-  otp: string;
-}
 
 export interface FxModel {
   id: number;
@@ -22,7 +16,7 @@ export interface FxModel {
   fileName: string;
 }
 
-export interface FxRatesPageState {
+export interface PersonalInfoPageState {
   rates: Array<FxModel>;
   total?: number;
   page?: number;
@@ -31,7 +25,7 @@ export interface FxRatesPageState {
   isLoading: boolean;
 }
 
-export const INITIAL_STATE: FxRatesPageState = {
+export const INITIAL_STATE: PersonalInfoPageState = {
   rates: [],
   total: undefined,
   page: undefined,
@@ -40,26 +34,26 @@ export const INITIAL_STATE: FxRatesPageState = {
   isLoading: false
 };
 
-const LoginPage = (
+const CreatePersonalInfo = (
   state = INITIAL_STATE,
-  action: FxRatesPageTypes
-): FxRatesPageState => {
+  action: CreatePersonalInfoPageTypes
+): PersonalInfoPageState => {
   switch (action.type) {
-    case FX_LIST_REQUEST:
+    case CREATE_PERSONAL_INFO_REQUEST:
       return {
         ...state,
         isLoading: true
       };
-    case FX_LIST_SUCCESS:
+    case CREATE_PERSONAL_INFO_SUCCESS:
       return {
         ...state,
         rates: action.payload.rows,
         isLoading: true
       };
-    case FX_LIST_FAILURE:
+    case CREATE_PERSONAL_INFO_FAILURE:
     default:
       return state;
   }
 };
 
-export default LoginPage;
+export default CreatePersonalInfo;

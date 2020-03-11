@@ -38,9 +38,9 @@ const Login = () => {
     // dispatch(loginApi({userName, password}))
   };
   return (
-    <div className='flex-1 items-center flex bg-indigo-200'>
+    <div className='flex-1 items-center flex bg-gray-800'>
       <div className='w-full max-w-xs mx-auto object-center'>
-        <div className={'items-center text-center'}>Kynec</div>
+        <div className={'items-center text-center'}>Secure Personal DB</div>
         {uiState === 'login' ? (
           <LoginForm
             onSubmit={mockLogin}

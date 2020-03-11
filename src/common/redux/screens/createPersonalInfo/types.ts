@@ -19,3 +19,10 @@ export type CreatePersonalInfoPageTypes =
   | CreatePersonalInfoRequest
   | CreatePersonalInfoSuccess
   | CreatePersonalInfoFailure;
+
+export interface PersonalInfoForm {
+  firstName: string;
+  lastName: string;
+  encryptionKey: string;
+  file: File;
+}

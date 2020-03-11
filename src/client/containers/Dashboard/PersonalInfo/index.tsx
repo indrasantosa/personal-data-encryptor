@@ -4,23 +4,17 @@ import { getFxRates } from '../../../../common/redux/screens/fxPage/action';
 import { ApplicationRootState, getScreenState } from '../../../../common/redux';
 import { getRates } from '../../../../common/redux/screens/loginPage/reducer';
 import { getFxRatesPage } from '../../../../common/redux/screens';
-import { FxModel } from '../../../../common/redux/screens/fxPage/reducer';
+import { getPersonalInfo } from '../../../../common/redux/screens/indexPersonalInfo/action';
 
 const FxRates = () => {
   const dispatch = useDispatch();
-  const rates = useSelector((state: ApplicationRootState) =>
-    getRates(getFxRatesPage(getScreenState(state)))
-  );
-  const fxPageState = useSelector((state: ApplicationRootState) =>
-    getFxRatesPage(getScreenState(state))
-  );
 
-  const fetchFxRates = (page = 1) => {
-    dispatch(getFxRates(page));
+  const fetchInitialData = (page = 1) => {
+    dispatch(getPersonalInfo({ page }));
   };
 
   useEffect(() => {
-    fetchFxRates();
+    fetchInitialData();
   }, []);
 
   return (

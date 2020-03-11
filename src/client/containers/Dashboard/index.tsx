@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { NavLink, Switch, Route } from 'react-router-dom';
 import Navigation from '../../components/Navigation';
-import FxRates from './FxRates';
-import CfdPage from './Cfd';
 import PersonalInfoPage from './PersonalInfo';
 import PersonalInfoCreatePage from './PersonalInfoCreate';
 
@@ -26,12 +24,6 @@ const Dashboard = () => {
       <div className='w-full mx-auto object-center flex-1 h-full'>
         <Navigation />
         <Switch>
-          <Route path={'/dashboard/fx-rates'}>
-            <FxRates />
-          </Route>
-          <Route path={'/dashboard/cfd'}>
-            <CfdPage />
-          </Route>
           <Route exact path={'/dashboard/personal-info'}>
             <PersonalInfoPage />
           </Route>
