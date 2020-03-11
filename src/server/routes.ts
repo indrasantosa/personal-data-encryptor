@@ -40,6 +40,13 @@ const createApplicationRouter = () => {
     InfoShareController.verifyExpiry,
     InfoShareController.retrieveData
   );
+  router.post(
+    APIRoutes.shareFile,
+    InfoShareController.getShareId,
+    InfoShareController.verifyShareKey,
+    InfoShareController.verifyDownloadExpiry,
+    InfoShareController.retrieveFile
+  );
 
   return router;
 };

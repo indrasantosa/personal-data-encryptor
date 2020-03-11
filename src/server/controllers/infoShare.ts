@@ -4,6 +4,7 @@ import { PersonalInfo } from '../../common/entity/PersonalInfo';
 import { PersonalFile } from '../../common/entity/PersonalFile';
 import { UnauthorizedError, BadRequestError } from '../../common/utils/errors';
 import { InfoShare, ShareType } from '../../common/entity/InfoShare';
+import { decryptFile } from '../../common/utils/encrypt';
 
 export default {
   create: async (ctx: Context, next: Next) => {
@@ -60,6 +61,33 @@ export default {
       throw new UnauthorizedError(e.message);
     }
   },
+  retrieveFile: async (ctx: Context, next: Next) => {
+    const infoShareRepository = getManager().getRepository(InfoShare);
+    const shareInfo: InfoShare = ctx.shareInfo;
+    const encryptionToken = shareInfo.getEncryptionToken(
+      ctx.request.body.shareToken
+    );
+
+    if (shareInfo.type === ShareType.onetime) {
+      shareInfo.fileDownloadUsed = true;
+      await infoShareRepository.save(shareInfo);
+    }
+
+    const responseStream = decryptFile(
+      encryptionToken,
+      shareInfo.personalInfo.file.encryptedContent
+    );
+    try {
+      ctx.status = 200;
+      ctx.set(
+        'Content-disposition',
+        `attachment; filename="${shareInfo.personalInfo.file.fileName}"`
+      );
+      ctx.body = responseStream;
+    } catch (e) {
+      throw new UnauthorizedError(e.message);
+    }
+  },
   getShareId: async (ctx: Context, next: Next) => {
     const infoShareRepository = getManager().getRepository(InfoShare);
 
@@ -89,6 +117,17 @@ export default {
       throw new BadRequestError('Share link has been expired');
     }
     if (!shareInfo.active) {
+      throw new BadRequestError('Share link has been used');
+    }
+    await next();
+  },
+  verifyDownloadExpiry: async (ctx: Context, next: Next) => {
+    const shareInfo: InfoShare = ctx.shareInfo;
+
+    if (shareInfo.expiryDate && shareInfo.expiryDate < new Date()) {
+      throw new BadRequestError('Share link has been expired');
+    }
+    if (shareInfo.fileDownloadUsed) {
       throw new BadRequestError('Share link has been used');
     }
     await next();

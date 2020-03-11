@@ -16,5 +16,6 @@ export const APIRoutes: Route = {
   personalInfoRetrieve: '/api/v1/personal-info/:personalInfoId/retrieve',
   personalInfoShare: '/api/v1/personal-info/:personalInfoId/share',
   personalFileRetrieve: '/api/v1/personal-info/:personalInfoId/file',
-  share: '/api/v1/info-share/:shareId'
+  share: '/api/v1/info-share/:shareId',
+  shareFile: '/api/v1/info-share/:shareId/file'
 };
