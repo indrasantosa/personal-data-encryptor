@@ -16,6 +16,7 @@ const FxRates = () => {
   const sendForm = e => {
     e.preventDefault();
     const data = {
+      label: 'label1',
       firstName: name,
       lastName: 'lastname',
       encryptionKey: 'key',

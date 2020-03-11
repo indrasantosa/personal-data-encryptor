@@ -1,14 +1,3 @@
-import {
-  LoginPageTypes,
-  LOGIN_API_REQUEST,
-  LOGIN_API_SUCCESS,
-  LOGIN_API_FAILURE,
-  VERIFY_OTP_REQUEST,
-  VERIFY_OTP_SUCCESS,
-  VERIFY_OTP_FAILURE
-} from './types';
-import { FxRatesPageState } from '../fxPage/reducer';
-
 interface Message {
   userName: string;
   password: string;

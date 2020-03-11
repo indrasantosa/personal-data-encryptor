@@ -18,10 +18,10 @@ export class PersonalInfo {
   id: string;
 
   @Column()
-  firstName: string;
+  label: string;
 
   @Column()
-  lastName: string;
+  encryptedContent: string;
 
   @Column()
   hashedEncryptionKey: string;
@@ -39,5 +39,19 @@ export class PersonalInfo {
   @BeforeInsert()
   beforeInsert() {
     this.id = uuid();
+  }
+
+  toJson() {
+    const { id, label, createDate, updateDate, file } = this;
+    return {
+      id,
+      label,
+      createDate,
+      updateDate,
+      file: {
+        id: file.id,
+        fileName: file.fileName
+      }
+    };
   }
 }

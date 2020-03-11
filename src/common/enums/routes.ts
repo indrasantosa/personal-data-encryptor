@@ -18,5 +18,6 @@ export const APIRoutes: Route = {
 
   account: '/api/v1/account',
   personalInfo: '/api/v1/personal-info',
+  personalInfoShare: '/api/v1/personal-info/:id/share',
   share: '/api/v1/share'
 };

@@ -21,6 +21,7 @@ export type CreatePersonalInfoPageTypes =
   | CreatePersonalInfoFailure;
 
 export interface PersonalInfoForm {
+  label: string;
   firstName: string;
   lastName: string;
   encryptionKey: string;

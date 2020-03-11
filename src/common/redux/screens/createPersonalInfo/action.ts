@@ -26,6 +26,7 @@ export const createPersonalInfo = (
   try {
     dispatch(createPersonalInfoRequest());
     const formData = new FormData();
+    formData.append('label', personalInfoForm.label);
     formData.append('firstName', personalInfoForm.firstName);
     formData.append('lastName', personalInfoForm.lastName);
     formData.append('encryptionKey', personalInfoForm.encryptionKey);

@@ -1,10 +1,11 @@
 import { Context, Next } from 'koa';
 import { getManager } from 'typeorm';
 import { createHash } from 'crypto';
-import { encryptFile } from '../../common/utils/encrypt';
+import { encryptFile, encryptString } from '../../common/utils/encrypt';
 import { PersonalInfo } from '../../common/entity/PersonalInfo';
 import { PersonalFile } from '../../common/entity/PersonalFile';
 import { BadRequestError } from '../../common/utils/errors';
+import { PersonalInfoForm } from '../../common/redux/screens/createPersonalInfo/types';
 
 export default {
   index: async (ctx: Context, next: Next) => {
@@ -26,13 +27,12 @@ export default {
     const personalFileRepository = getManager().getRepository(PersonalFile);
 
     const files = ctx.request.files;
-    const newPersonalInfoPayload: Partial<PersonalInfo> = ctx.request.body;
+    const newPersonalInfoPayload: PersonalInfoForm = ctx.request.body;
 
     const newPersonalFile = new PersonalFile();
     if (files && files.file) {
       const file = files.file;
       const fileBuffer = await encryptFile('password', files.file);
-      console.log('FileBuffer: ', fileBuffer);
 
       newPersonalFile.fileName = file.name;
       newPersonalFile.type = file.type;
@@ -40,8 +40,14 @@ export default {
       await personalFileRepository.save(newPersonalFile);
     }
 
-    const newPersonalInfo = personalInfoRepository.create(
-      newPersonalInfoPayload
+    const newPersonalInfo = new PersonalInfo();
+    newPersonalInfo.label = newPersonalInfoPayload.label;
+    newPersonalInfo.encryptedContent = encryptString(
+      newPersonalInfoPayload.encryptionKey,
+      JSON.stringify({
+        firstName: newPersonalInfoPayload.firstName,
+        lastName: newPersonalInfoPayload.lastName
+      })
     );
 
     try {
@@ -50,28 +56,10 @@ export default {
         .digest('base64');
       newPersonalInfo.file = newPersonalFile;
       const insertedRow = await personalInfoRepository.save(newPersonalInfo);
-      const {
-        firstName,
-        lastName,
-        id,
-        createDate,
-        updateDate,
-        file
-      } = insertedRow;
       ctx.status = 200;
       ctx.body = {
         status: 'success',
-        data: {
-          id,
-          firstName,
-          lastName,
-          createDate,
-          updateDate,
-          file: {
-            id: file.id,
-            fileName: file.fileName
-          }
-        }
+        data: insertedRow.toJson()
       };
     } catch (e) {
       throw new BadRequestError(e.message);
