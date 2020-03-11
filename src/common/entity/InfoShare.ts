@@ -8,7 +8,7 @@ import {
   ManyToOne
 } from 'typeorm';
 import { uuid } from 'uuidv4';
-import { encryptString } from '../utils/encrypt';
+import { encryptString, decryptString } from '../utils/encrypt';
 import { PersonalInfo } from './PersonalInfo';
 
 export enum ShareType {
@@ -20,6 +20,9 @@ export enum ShareType {
 export class InfoShare {
   @PrimaryColumn()
   id: string;
+
+  @Column()
+  salt: string;
 
   @Column({ nullable: true })
   encryptedKey: string;
@@ -38,7 +41,8 @@ export class InfoShare {
 
   @ManyToOne(
     type => PersonalInfo,
-    personalInfo => personalInfo.shareLinks
+    personalInfo => personalInfo.shareLinks,
+    { eager: true }
   )
   personalInfo: PersonalInfo;
 
@@ -57,7 +61,12 @@ export class InfoShare {
 
   getShareToken(encryptionKey: string) {
     const shareToken = uuid();
-    this.encryptedKey = encryptString(this.id + shareToken, encryptionKey);
+    this.salt = uuid();
+    this.encryptedKey = encryptString(this.salt + shareToken, encryptionKey);
     return shareToken;
+  }
+
+  getEncryptionToken(shareToken: string) {
+    return decryptString(this.salt + shareToken, this.encryptedKey);
   }
 }
