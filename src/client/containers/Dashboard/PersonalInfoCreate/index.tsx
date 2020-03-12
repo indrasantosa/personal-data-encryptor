@@ -41,10 +41,14 @@ const FxRates = () => {
               className='appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
               id='grid-first-name'
               type='text'
-              placeholder='Secret information'
+              placeholder='Personal info label'
               value={label}
               onChange={e => setLabel(e.target.value)}
             />
+            <p className='text-gray-600 text-xs italic'>
+              Label will be used to identify your information. Do not put secret
+              information here
+            </p>
           </div>
         </div>
         <div className='flex flex-wrap -mx-3 mb-6'>
@@ -59,10 +63,13 @@ const FxRates = () => {
               className='appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
               id='grid-first-name'
               type='text'
-              placeholder='Jane'
+              placeholder='First Name'
               value={firstName}
               onChange={e => setFirstName(e.target.value)}
             />
+            <p className='text-gray-600 text-xs italic'>
+              First name will be encrypted
+            </p>
           </div>
           <div className='w-full md:w-1/2 px-3'>
             <label
@@ -72,11 +79,14 @@ const FxRates = () => {
               Last Name
             </label>
             <input
-              className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+              className='appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
               id='grid-last-name'
               type='text'
-              placeholder='Doe'
+              placeholder='Last Name'
             />
+            <p className='text-gray-600 text-xs italic'>
+              Last name will be encrypted
+            </p>
           </div>
         </div>
 
@@ -89,7 +99,7 @@ const FxRates = () => {
               Encryption key
             </label>
             <input
-              className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+              className='appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
               id='grid-password'
               type='password'
               placeholder='To be used to encrypt your data'
@@ -109,7 +119,7 @@ const FxRates = () => {
               Encryption key
             </label>
             <input
-              className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+              className='appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
               id='grid-password'
               type='file'
               placeholder='To be used to encrypt your data'

@@ -1,8 +1,11 @@
 import { combineReducers } from 'redux';
+import { EncryptedPersonalInfo } from '../screens/indexPersonalInfo/reducer';
 
 export interface PersonalInfoState {
   allIds: Array<string>;
-  byId: any;
+  byId: {
+    [key: string]: EncryptedPersonalInfo;
+  };
 }
 
 export const INITIAL_STATE = {
@@ -11,10 +14,10 @@ export const INITIAL_STATE = {
 };
 
 const byId = (state = INITIAL_STATE.byId, action: any) => {
-  if (action.reponse?.entities?.personalInfos) {
+  if (action.response?.entities?.personalInfos) {
     return {
       ...state,
-      ...action.reponse.entities.personalInfos
+      ...action.response.entities.personalInfos
     };
   }
   return state;
@@ -23,7 +26,7 @@ const byId = (state = INITIAL_STATE.byId, action: any) => {
 const allIds = (state = INITIAL_STATE.allIds, action: any) => {
   return [
     ...state,
-    ...Object.keys(action.reponse?.entities?.personalInfos || {})
+    ...Object.keys(action.response?.entities?.personalInfos || {})
   ];
 };
 
@@ -31,10 +34,5 @@ export const reducer = combineReducers({
   byId,
   allIds
 });
-
-export const getPersonalInfo = (state: PersonalInfoState, id: string) =>
-  state.byId[id];
-
-export const getAllPersonalInfo = (state: PersonalInfoState) => state.allIds;
 
 export default reducer;

@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 import LoginForm from '../../components/LoginForm';
 import OTPForm from '../../components/OTPForm';
-import {
-  loginApi,
-  verifyOTP
-} from '../../../common/redux/screens/loginPage/action';
 import { ApplicationRootState } from '../../../common/redux';
 
 import { useDispatch, useSelector } from 'react-redux';

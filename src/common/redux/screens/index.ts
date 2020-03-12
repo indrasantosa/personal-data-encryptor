@@ -1,24 +1,23 @@
 import { combineReducers } from 'redux';
-import createPersonalInfoReducer, {
-  INITIAL_STATE as createPersonalInfoInitialState,
-  PersonalInfoCreatePageState
-} from './createPersonalInfo/reducer';
-import indexPersonalInfoReducer, {
-  INITIAL_STATE as indexPersonalInfoInitialState,
-  PersonalInfoIndexPageState
-} from './indexPersonalInfo/reducer';
+import createPersonalInfoReducer, * as fromCreatePersonalInfoScreen from './createPersonalInfo/reducer';
+import indexPersonalInfoReducer, * as fromIndexPersonalInfoScreen from './indexPersonalInfo/reducer';
 
 export interface ScreenRootState {
-  createPersonalInfo: PersonalInfoCreatePageState;
-  indexPersonalInfo: PersonalInfoIndexPageState;
+  createPersonalInfo: fromCreatePersonalInfoScreen.PersonalInfoCreatePageState;
+  indexPersonalInfo: fromIndexPersonalInfoScreen.PersonalInfoIndexPageState;
 }
 
 export const INITIAL_STATE: ScreenRootState = {
-  createPersonalInfo: createPersonalInfoInitialState,
-  indexPersonalInfo: indexPersonalInfoInitialState
+  createPersonalInfo: fromCreatePersonalInfoScreen.INITIAL_STATE,
+  indexPersonalInfo: fromIndexPersonalInfoScreen.INITIAL_STATE
 };
 
 export default combineReducers({
   createPersonalInfo: createPersonalInfoReducer,
   indexPersonalInfo: indexPersonalInfoReducer
 });
+
+export const getCreatePersonalInfoState = (state: ScreenRootState) =>
+  state.createPersonalInfo;
+export const getIndexPersonalInfoState = (state: ScreenRootState) =>
+  state.indexPersonalInfo;

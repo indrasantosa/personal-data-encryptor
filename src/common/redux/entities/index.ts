@@ -15,5 +15,4 @@ export default combineReducers({
   personalInfo: personalInfoReducer
 });
 
-export const getAllPersonalInfo = (state: EntityState) =>
-  fromPersonalInfo.getAllPersonalInfo(state.personalInfo);
+export const getEntityPersonalInfo = (state: EntityState) => state.personalInfo;

@@ -19,7 +19,7 @@ export interface EncryptedPersonalInfo {
 }
 
 export interface PersonalInfoIndexPageState {
-  personalInfos: Array<EncryptedPersonalInfo>;
+  personalInfos: Array<string>;
   isLoading: boolean;
 }
 
