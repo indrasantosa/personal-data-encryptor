@@ -36,3 +36,41 @@ export const getPersonalInfo = ({ page = 1 }: { page: number }) => async (
     dispatch(getPersonalInfoFailure());
   }
 };
+
+export const requestDecryptPersonalFile = (
+  infoId: string,
+  encryptionKey: string,
+  fileName: string
+) => async (dispatch: Dispatch) => {
+  const response = await Axios.post(
+    `${APIRoutes.personalInfo}/${infoId}/file`,
+    {
+      encryptionKey
+    },
+    { responseType: 'blob' }
+  );
+  console.log(response);
+  const url = window.URL.createObjectURL(new Blob([response.data]));
+  const link = document.createElement('a');
+  link.href = url;
+  link.setAttribute('download', fileName); //or any other extension
+  document.body.appendChild(link);
+  link.click();
+};
+
+export const requestDecryptPersonalInfo = (
+  infoId: string,
+  encryptionKey: string
+) => async (dispatch: Dispatch) => {
+  try {
+    const response = await Axios.post(
+      `${APIRoutes.personalInfo}/${infoId}/retrieve`,
+      {
+        encryptionKey
+      }
+    );
+    alert(JSON.stringify(response.data.secret));
+  } catch (e) {
+    alert(e);
+  }
+};

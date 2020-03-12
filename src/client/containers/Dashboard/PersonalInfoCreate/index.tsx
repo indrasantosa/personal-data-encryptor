@@ -83,6 +83,7 @@ const FxRates = () => {
               id='grid-last-name'
               type='text'
               placeholder='Last Name'
+              onChange={e => setLastName(e.target.value)}
             />
             <p className='text-gray-600 text-xs italic'>
               Last name will be encrypted
@@ -103,6 +104,7 @@ const FxRates = () => {
               id='grid-password'
               type='password'
               placeholder='To be used to encrypt your data'
+              onChange={e => setEncryptionKey(e.target.value)}
             />
             <p className='text-gray-600 text-xs italic'>
               Do not lose the key else you won't be able to access/share your
@@ -116,7 +118,7 @@ const FxRates = () => {
               className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
               htmlFor='grid-password'
             >
-              Encryption key
+              Upload Document
             </label>
             <input
               className='appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'

@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useStore, useSelector } from 'react-redux';
-import { getPersonalInfo } from '../../../../common/redux/screens/indexPersonalInfo/action';
-import { ApplicationRootState } from '../../../../common/redux';
+import {
+  getPersonalInfo,
+  requestDecryptFile,
+  requestDecryptPersonalInfo,
+  requestDecryptPersonalFile
+} from '../../../../common/redux/screens/indexPersonalInfo/action';
 import * as fromState from '../../../../common/redux';
 
 const FxRates = () => {
@@ -11,6 +15,23 @@ const FxRates = () => {
 
   const fetchInitialData = (page = 1) => {
     dispatch(getPersonalInfo({ page }));
+  };
+  const requestDecryptFile = (
+    personalInfoId: string,
+    fileName: string
+  ) => e => {
+    e.preventDefault();
+    const input = window.prompt('Please enter your encryption key');
+    if (input) {
+      dispatch(requestDecryptPersonalFile(personalInfoId, input, fileName));
+    }
+  };
+  const requestDecryptInfo = (personalInfoId: string) => e => {
+    e.preventDefault();
+    const input = window.prompt('Please enter your encryption key');
+    if (input) {
+      dispatch(requestDecryptPersonalInfo(personalInfoId, input));
+    }
   };
 
   useEffect(() => {
@@ -50,11 +71,22 @@ const FxRates = () => {
                 <td className={'border-gray-500 border p-2'}>
                   <button
                     className={
-                      'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer mr-2'
+                      'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer mr-2 mb-2'
                     }
-                    onClick={() => {}}
+                    onClick={requestDecryptInfo(currentInfo.id)}
                   >
                     Decrypt Data
+                  </button>
+                  <button
+                    className={
+                      'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer mr-2 mb-2'
+                    }
+                    onClick={requestDecryptFile(
+                      currentInfo.id,
+                      currentInfo.file.fileName
+                    )}
+                  >
+                    Decrypt File
                   </button>
                   <button
                     className={
@@ -62,7 +94,7 @@ const FxRates = () => {
                     }
                     onClick={() => {}}
                   >
-                    Decrypt File
+                    Share info
                   </button>
                 </td>
               </tr>
