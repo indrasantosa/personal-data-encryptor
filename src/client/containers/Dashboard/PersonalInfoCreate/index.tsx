@@ -1,25 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useStore, useSelector } from 'react-redux';
-import { getFxRates } from '../../../../common/redux/screens/fxPage/action';
-import { ApplicationRootState, getScreenState } from '../../../../common/redux';
-import { getRates } from '../../../../common/redux/screens/loginPage/reducer';
-import { getFxRatesPage } from '../../../../common/redux/screens';
-import { FxModel } from '../../../../common/redux/screens/fxPage/reducer';
+import { useDispatch } from 'react-redux';
 import { createPersonalInfo } from '../../../../common/redux/screens/createPersonalInfo/action';
 
 const FxRates = () => {
   const dispatch = useDispatch();
 
   const [attachedFile, setAttachedFile] = useState(undefined);
-  const [name, setName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [label, setLabel] = useState('');
+  const [encryptionKey, setEncryptionKey] = useState('');
 
   const sendForm = e => {
     e.preventDefault();
     const data = {
-      label: 'label1',
-      firstName: name,
-      lastName: 'lastname',
-      encryptionKey: 'key',
+      label: label,
+      firstName: firstName,
+      lastName: lastName,
+      encryptionKey: encryptionKey,
       file: attachedFile
     };
     console.log(data);
@@ -28,9 +26,27 @@ const FxRates = () => {
 
   return (
     <div className={'w-full p-8'}>
-      <h2 className={'text-2xl'}>Create Personal Info</h2>
+      <h2 className={'text-2xl mb-6'}>Create Personal Info</h2>
 
       <form className='w-full max-w-lg'>
+        <div className='flex flex-wrap -mx-3 mb-6'>
+          <div className='w-full px-3'>
+            <label
+              className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
+              htmlFor='grid-first-name'
+            >
+              Label
+            </label>
+            <input
+              className='appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+              id='grid-first-name'
+              type='text'
+              placeholder='Secret information'
+              value={label}
+              onChange={e => setLabel(e.target.value)}
+            />
+          </div>
+        </div>
         <div className='flex flex-wrap -mx-3 mb-6'>
           <div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
             <label
@@ -40,16 +56,13 @@ const FxRates = () => {
               First Name
             </label>
             <input
-              className='appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+              className='appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
               id='grid-first-name'
               type='text'
               placeholder='Jane'
-              value={name}
-              onChange={e => setName(e.target.value)}
+              value={firstName}
+              onChange={e => setFirstName(e.target.value)}
             />
-            <p className='text-red-500 text-xs italic'>
-              Please fill out this field.
-            </p>
           </div>
           <div className='w-full md:w-1/2 px-3'>
             <label
@@ -66,6 +79,7 @@ const FxRates = () => {
             />
           </div>
         </div>
+
         <div className='flex flex-wrap -mx-3 mb-6'>
           <div className='w-full px-3'>
             <label
@@ -102,12 +116,19 @@ const FxRates = () => {
               onChange={e => setAttachedFile(e.target.files[0])}
             />
             <p className='text-gray-600 text-xs italic'>
-              Do not lose the key else you won't be able to access/share your
-              data
+              Upload your CV/file here. Don't worry it will be encrypted in our
+              server
             </p>
           </div>
         </div>
-        <input type={'submit'} value={'Submit'} onClick={sendForm} />
+        <input
+          className={
+            'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer'
+          }
+          type={'submit'}
+          value={'Submit'}
+          onClick={sendForm}
+        />
       </form>
     </div>
   );

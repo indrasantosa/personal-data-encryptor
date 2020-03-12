@@ -5,33 +5,12 @@ import {
   CreatePersonalInfoPageTypes
 } from './types';
 
-export interface FxModel {
-  id: number;
-  cobdate: Date;
-  fromcurrency: string;
-  fromCurrencyname: string;
-  tocurrency: string;
-  toCurrencyname: string;
-  exchangerate: string;
-  fileName: string;
-}
-
-export interface PersonalInfoPageState {
-  rates: Array<FxModel>;
-  total?: number;
-  page?: number;
-  pageSize?: number;
-  totalPages?: number;
-  isLoading: boolean;
+export interface PersonalInfoCreatePageState {
+  isSubmitting: boolean;
 }
 
 export const INITIAL_STATE: PersonalInfoPageState = {
-  rates: [],
-  total: undefined,
-  page: undefined,
-  pageSize: undefined,
-  totalPages: undefined,
-  isLoading: false
+  isSubmitting: false
 };
 
 const CreatePersonalInfo = (
@@ -42,13 +21,12 @@ const CreatePersonalInfo = (
     case CREATE_PERSONAL_INFO_REQUEST:
       return {
         ...state,
-        isLoading: true
+        isSubmitting: true
       };
     case CREATE_PERSONAL_INFO_SUCCESS:
       return {
         ...state,
-        rates: action.payload.rows,
-        isLoading: true
+        isSubmitting: true
       };
     case CREATE_PERSONAL_INFO_FAILURE:
     default:

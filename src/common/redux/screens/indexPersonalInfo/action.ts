@@ -1,10 +1,12 @@
 import { Dispatch } from 'redux';
 import Axios from 'axios';
+import { normalize } from 'normalizr';
 import {
   LIST_PERSONAL_INFO_REQUEST,
   LIST_PERSONAL_INFO_SUCCESS,
   LIST_PERSONAL_INFO_FAILURE
 } from './types';
+import { personalInfo } from '../../entities/schema';
 import { APIRoutes } from '../../../enums/routes';
 
 export const getPersonalInfoRequest = () => ({
@@ -12,7 +14,7 @@ export const getPersonalInfoRequest = () => ({
 });
 export const getPersonalInfoSuccess = (response: unknown) => ({
   type: LIST_PERSONAL_INFO_SUCCESS,
-  payload: response
+  response: normalize(response, { result: [personalInfo] })
 });
 export const getPersonalInfoFailure = () => ({
   type: LIST_PERSONAL_INFO_FAILURE

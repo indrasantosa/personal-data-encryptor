@@ -15,7 +15,7 @@ export default {
       ctx.status = 200;
       ctx.body = {
         status: 'success',
-        result: result
+        result: result.map(info => info.toJson())
       };
     } catch (e) {
       throw e;

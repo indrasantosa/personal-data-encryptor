@@ -8,7 +8,7 @@ interface ListPersonalInfoRequest {
 
 interface ListPersonalInfoSuccess {
   type: typeof LIST_PERSONAL_INFO_SUCCESS;
-  payload: any;
+  response: any;
 }
 
 interface ListPersonalInfoFailure {

@@ -15,6 +15,17 @@ import { PersonalFile } from './PersonalFile';
 import { encryptString, decryptString } from '../utils/encrypt';
 import { InfoShare } from './InfoShare';
 
+interface EncryptedPersonalInfo {
+  id: string;
+  label: string;
+  createDate: Date;
+  updateDate: Date;
+  file: {
+    id: string;
+    fileName: string;
+  };
+}
+
 @Entity()
 export class PersonalInfo {
   @PrimaryColumn()
@@ -50,7 +61,7 @@ export class PersonalInfo {
     this.id = uuid();
   }
 
-  toJson() {
+  toJson(): EncryptedPersonalInfo {
     const { id, label, createDate, updateDate, file } = this;
     return {
       id,

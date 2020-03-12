@@ -2,41 +2,35 @@ import {
   LIST_PERSONAL_INFO_REQUEST,
   LIST_PERSONAL_INFO_SUCCESS,
   LIST_PERSONAL_INFO_FAILURE,
-  CreatePersonalInfoPageTypes
+  ListPersonalInfoPageTypes
 } from './types';
 
-export interface FxModel {
-  id: number;
-  cobdate: Date;
-  fromcurrency: string;
-  fromCurrencyname: string;
-  tocurrency: string;
-  toCurrencyname: string;
-  exchangerate: string;
+export interface EncryptedPersonalFile {
+  id: string;
   fileName: string;
 }
 
-export interface PersonalInfoPageState {
-  rates: Array<FxModel>;
-  total?: number;
-  page?: number;
-  pageSize?: number;
-  totalPages?: number;
+export interface EncryptedPersonalInfo {
+  id: string;
+  label: string;
+  createDate: Date;
+  updateDate: Date;
+  file: EncryptedPersonalFile;
+}
+
+export interface PersonalInfoIndexPageState {
+  personalInfos: Array<EncryptedPersonalInfo>;
   isLoading: boolean;
 }
 
 export const INITIAL_STATE: PersonalInfoPageState = {
-  rates: [],
-  total: undefined,
-  page: undefined,
-  pageSize: undefined,
-  totalPages: undefined,
+  personalInfos: [],
   isLoading: false
 };
 
 const ListPersonalInfo = (
   state = INITIAL_STATE,
-  action: CreatePersonalInfoPageTypes
+  action: ListPersonalInfoPageTypes
 ): PersonalInfoPageState => {
   switch (action.type) {
     case LIST_PERSONAL_INFO_REQUEST:
@@ -47,13 +41,17 @@ const ListPersonalInfo = (
     case LIST_PERSONAL_INFO_SUCCESS:
       return {
         ...state,
-        rates: action.payload.rows,
-        isLoading: true
+        personalInfos: action.response.result.result,
+        isLoading: false
       };
     case LIST_PERSONAL_INFO_FAILURE:
+      return {
+        ...state,
+        isLoading: false
+      };
     default:
       return state;
   }
 };
 
-export default CreatePersonalInfo;
+export default ListPersonalInfo;

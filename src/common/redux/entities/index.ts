@@ -1,8 +1,19 @@
 import { combineReducers } from 'redux';
 // import personalFileReducer from './personalFile';
-// import personalInfoReducer from './personalInfo';
+import personalInfoReducer, * as fromPersonalInfo from './personalInfo';
+
+export interface EntityState {
+  personalInfo: fromPersonalInfo.PersonalInfoState;
+}
+
+export const INITIAL_STATE = {
+  personalInfo: fromPersonalInfo.INITIAL_STATE
+};
 
 export default combineReducers({
   // personalFile: personalFileReducer,
-  // personalInfo: personalInfoReducer
+  personalInfo: personalInfoReducer
 });
+
+export const getAllPersonalInfo = (state: EntityState) =>
+  fromPersonalInfo.getAllPersonalInfo(state.personalInfo);
