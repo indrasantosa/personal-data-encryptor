@@ -7,16 +7,15 @@ import React, {
   FormEvent
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ShareType } from '../../../../common/enums/app';
 import { push } from 'react-router-redux';
+import DateTimePicker from 'react-datetime-picker';
+import { RouteComponentProps } from 'react-router-dom';
 import {
   getShareLinksInfo,
   resetSharePersonalInfo
 } from '../../../../common/redux/screens/sharePersonalInfo/action';
 import { getSharePersonalInfoScreenState } from '../../../../common/redux';
-import { RouteComponentProps } from 'react-router-dom';
-
-const DateTimePicker: any = require('react-datetime-picker');
+import { ShareType } from '../../../../common/enums/app';
 
 interface PersonalInfoRetrieveSharedProps {
   infoShareId: string;
