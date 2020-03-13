@@ -23,7 +23,7 @@ export interface PersonalInfoIndexPageState {
   isLoading: boolean;
 }
 
-export const INITIAL_STATE: PersonalInfoPageState = {
+export const INITIAL_STATE: PersonalInfoIndexPageState = {
   personalInfos: [],
   isLoading: false
 };
@@ -31,7 +31,7 @@ export const INITIAL_STATE: PersonalInfoPageState = {
 const ListPersonalInfo = (
   state = INITIAL_STATE,
   action: ListPersonalInfoPageTypes
-): PersonalInfoPageState => {
+): PersonalInfoIndexPageState => {
   switch (action.type) {
     case LIST_PERSONAL_INFO_REQUEST:
       return {

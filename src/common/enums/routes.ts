@@ -9,7 +9,8 @@ export const FrontendRoutes: Route = {
   dashboardPersonalInfo: '/dashboard/personal-info',
   dashboardPersonalInfoCreate: '/dashboard/personal-info/create',
   dashbaordPersonalInfoShare:
-    '/dashboard/personal-info/500b9599-fea6-48dc-b6ca-b9fa943653d2/share'
+    '/dashboard/personal-info/500b9599-fea6-48dc-b6ca-b9fa943653d2/share',
+  dashboardRetrieveShared: '/dashboard/retrieve-shared'
 };
 
 export const APIRoutes: Route = {

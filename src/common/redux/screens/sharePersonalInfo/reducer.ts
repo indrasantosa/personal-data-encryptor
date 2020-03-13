@@ -12,7 +12,7 @@ export interface PersonalInfoIndexPageState {
   isSubmitting: boolean;
 }
 
-export const INITIAL_STATE: PersonalInfoPageState = {
+export const INITIAL_STATE: PersonalInfoIndexPageState = {
   generatedShareToken: undefined,
   generatedShareId: undefined,
   isSubmitting: false

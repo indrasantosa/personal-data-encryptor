@@ -9,14 +9,14 @@ export interface PersonalInfoCreatePageState {
   isSubmitting: boolean;
 }
 
-export const INITIAL_STATE: PersonalInfoPageState = {
+export const INITIAL_STATE: PersonalInfoCreatePageState = {
   isSubmitting: false
 };
 
 const CreatePersonalInfo = (
   state = INITIAL_STATE,
   action: CreatePersonalInfoPageTypes
-): PersonalInfoPageState => {
+): PersonalInfoCreatePageState => {
   switch (action.type) {
     case CREATE_PERSONAL_INFO_REQUEST:
       return {
