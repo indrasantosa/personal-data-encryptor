@@ -1,9 +1,12 @@
-import React, { useState, SetStateAction, useRef } from 'react';
+import React, { useState, SetStateAction, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DateTimePicker from 'react-datetime-picker';
 import { ShareType } from '../../../../common/enums/app';
 import { push } from 'react-router-redux';
-import { getShareLinksInfo } from '../../../../common/redux/screens/sharePersonalInfo/action';
+import {
+  getShareLinksInfo,
+  resetSharePersonalInfo
+} from '../../../../common/redux/screens/sharePersonalInfo/action';
 import { getSharePersonalInfoScreenState } from '../../../../common/redux';
 
 const PersonalInfoShare = ({ match }) => {
@@ -42,6 +45,12 @@ const PersonalInfoShare = ({ match }) => {
   const backToPersonalInfoList = () => {
     dispatch(push('/dashboard/personal-info'));
   };
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetSharePersonalInfo());
+    };
+  }, []);
 
   return (
     <div className={'w-full p-8'}>
