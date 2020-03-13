@@ -1,6 +1,12 @@
-import React, { useState, SetStateAction, useRef, useEffect } from 'react';
+import React, {
+  useState,
+  SetStateAction,
+  useRef,
+  useEffect,
+  MouseEvent,
+  FormEvent
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import DateTimePicker from 'react-datetime-picker';
 import { ShareType } from '../../../../common/enums/app';
 import { push } from 'react-router-redux';
 import {
@@ -8,11 +14,19 @@ import {
   resetSharePersonalInfo
 } from '../../../../common/redux/screens/sharePersonalInfo/action';
 import { getSharePersonalInfoScreenState } from '../../../../common/redux';
+import { RouteComponentProps } from 'react-router-dom';
 
-const PersonalInfoShare = ({ match }) => {
-  console.log(match);
+const DateTimePicker: any = require('react-datetime-picker');
+
+interface PersonalInfoRetrieveSharedProps {
+  infoShareId: string;
+}
+
+const PersonalInfoShare = ({
+  match
+}: RouteComponentProps<PersonalInfoRetrieveSharedProps>) => {
   const dispatch = useDispatch();
-  const linkInput = useRef();
+  const linkInputEl = useRef<HTMLInputElement>(null);
 
   const screenState = useSelector(getSharePersonalInfoScreenState);
   const shareLinks =
@@ -34,7 +48,7 @@ const PersonalInfoShare = ({ match }) => {
     );
   };
 
-  const requestShareInfo = e => {
+  const requestShareInfo = (e: MouseEvent) => {
     e.preventDefault();
     const encryptionKey = prompt('Enter your encryption key');
     if (encryptionKey) {
@@ -42,7 +56,7 @@ const PersonalInfoShare = ({ match }) => {
     }
   };
 
-  const backToPersonalInfoList = () => {
+  const backToPersonalInfoList = (e: MouseEvent) => {
     dispatch(push('/dashboard/personal-info'));
   };
 
@@ -81,9 +95,9 @@ const PersonalInfoShare = ({ match }) => {
                 id=''
                 className='appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white'
                 value={shareType}
-                onChange={e =>
+                onChange={(e: FormEvent<HTMLSelectElement>) =>
                   setShareType(
-                    parseInt(e.target.value) as SetStateAction<ShareType>
+                    parseInt(e.currentTarget.value) as SetStateAction<ShareType>
                   )
                 }
               >
@@ -146,15 +160,15 @@ const PersonalInfoShare = ({ match }) => {
               </label>
               <div className='inline-block relative w-64 mb-3 '>
                 <input
-                  ref={linkInput}
+                  ref={linkInputEl}
                   className='appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
                   id='grid-first-name'
                   type='text'
                   placeholder='Share links'
                   defaultValue={shareLinks}
-                  onClick={e => {
+                  onClick={() => {
                     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-                    linkInput?.current?.select();
+                    linkInputEl?.current?.select();
                   }}
                 />
               </div>

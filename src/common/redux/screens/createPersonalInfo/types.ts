@@ -25,5 +25,5 @@ export interface PersonalInfoForm {
   firstName: string;
   lastName: string;
   encryptionKey: string;
-  file: File;
+  file: any;
 }

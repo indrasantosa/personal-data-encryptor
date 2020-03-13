@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, MouseEvent, FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { createPersonalInfo } from '../../../../common/redux/screens/createPersonalInfo/action';
+import { PersonalInfoForm } from '../../../../common/redux/screens/createPersonalInfo/types';
 
 const PersonalInfoCreate = () => {
   const dispatch = useDispatch();
 
-  const [attachedFile, setAttachedFile] = useState(undefined);
+  const [attachedFile, setAttachedFile] = useState(null as any);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [label, setLabel] = useState('');
   const [encryptionKey, setEncryptionKey] = useState('');
 
-  const sendForm = e => {
+  const sendForm = (e: MouseEvent) => {
     e.preventDefault();
     const data = {
       label: label,
@@ -19,8 +20,7 @@ const PersonalInfoCreate = () => {
       lastName: lastName,
       encryptionKey: encryptionKey,
       file: attachedFile
-    };
-    console.log(data);
+    } as PersonalInfoForm;
     dispatch(createPersonalInfo(data));
   };
 
@@ -43,7 +43,9 @@ const PersonalInfoCreate = () => {
               type='text'
               placeholder='Personal info label'
               value={label}
-              onChange={e => setLabel(e.target.value)}
+              onChange={(e: FormEvent<HTMLInputElement>) =>
+                setLabel(e.currentTarget.value)
+              }
             />
             <p className='text-gray-600 text-xs italic'>
               Label will be used to identify your information. Do not put secret
@@ -65,7 +67,9 @@ const PersonalInfoCreate = () => {
               type='text'
               placeholder='First Name'
               value={firstName}
-              onChange={e => setFirstName(e.target.value)}
+              onChange={(e: FormEvent<HTMLInputElement>) =>
+                setFirstName(e.currentTarget.value)
+              }
             />
             <p className='text-gray-600 text-xs italic'>
               First name will be encrypted
@@ -83,7 +87,9 @@ const PersonalInfoCreate = () => {
               id='grid-last-name'
               type='text'
               placeholder='Last Name'
-              onChange={e => setLastName(e.target.value)}
+              onChange={(e: FormEvent<HTMLInputElement>) =>
+                setLastName(e.currentTarget.value)
+              }
             />
             <p className='text-gray-600 text-xs italic'>
               Last name will be encrypted
@@ -104,7 +110,9 @@ const PersonalInfoCreate = () => {
               id='grid-password'
               type='password'
               placeholder='To be used to encrypt your data'
-              onChange={e => setEncryptionKey(e.target.value)}
+              onChange={(e: FormEvent<HTMLInputElement>) =>
+                setEncryptionKey(e.currentTarget.value)
+              }
             />
             <p className='text-gray-600 text-xs italic'>
               Do not lose the key else you won't be able to access/share your
@@ -125,7 +133,9 @@ const PersonalInfoCreate = () => {
               id='grid-password'
               type='file'
               placeholder='To be used to encrypt your data'
-              onChange={e => setAttachedFile(e.target.files[0])}
+              onChange={(e: any) => {
+                setAttachedFile(e?.currentTarget?.files[0]);
+              }}
             />
             <p className='text-gray-600 text-xs italic'>
               Upload your CV/file here. Don't worry it will be encrypted in our

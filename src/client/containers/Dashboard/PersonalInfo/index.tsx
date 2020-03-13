@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, MouseEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getPersonalInfo,
@@ -16,21 +16,21 @@ const PersonalInfo = () => {
   const fetchInitialData = (page = 1) => {
     dispatch(getPersonalInfo({ page }));
   };
-  const requestDecryptFile = (personalInfoId: string) => e => {
+  const requestDecryptFile = (personalInfoId: string) => (e: MouseEvent) => {
     e.preventDefault();
     const input = window.prompt('Please enter your encryption key');
     if (input) {
       dispatch(requestDecryptPersonalFile(personalInfoId, input));
     }
   };
-  const requestDecryptInfo = (personalInfoId: string) => e => {
+  const requestDecryptInfo = (personalInfoId: string) => (e: MouseEvent) => {
     e.preventDefault();
     const input = window.prompt('Please enter your encryption key');
     if (input) {
       dispatch(requestDecryptPersonalInfo(personalInfoId, input));
     }
   };
-  const goToSharePage = (personalInfoId: string) => e => {
+  const goToSharePage = (personalInfoId: string) => (e: MouseEvent) => {
     dispatch(push(`/dashboard/personal-info/${personalInfoId}/share`));
   };
 

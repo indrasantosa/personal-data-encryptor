@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { push } from 'react-router-redux';
 import { useLocation } from 'react-router-dom';
@@ -7,12 +7,11 @@ import {
   requestDecryptPersonalSharedFile
 } from '../../../../common/redux/screens/retrieveSharedPersonalInfo/action';
 
-const PersonalInfoRetrieveShared = ({ match }) => {
-  console.log(match);
+const PersonalInfoRetrieveShared = () => {
   const dispatch = useDispatch();
   const queryParams: any = new URLSearchParams(useLocation().search);
 
-  const requestSharedInfo = e => {
+  const requestSharedInfo = (e: MouseEvent) => {
     e.preventDefault();
     dispatch(
       requestDecryptPersonalSharedInfo(
@@ -22,7 +21,7 @@ const PersonalInfoRetrieveShared = ({ match }) => {
     );
   };
 
-  const requestSharedFile = e => {
+  const requestSharedFile = (e: MouseEvent) => {
     e.preventDefault();
     dispatch(
       requestDecryptPersonalSharedFile(
