@@ -3,8 +3,9 @@ import { getManager } from 'typeorm';
 import { PersonalInfo } from '../../common/entity/PersonalInfo';
 import { PersonalFile } from '../../common/entity/PersonalFile';
 import { UnauthorizedError, BadRequestError } from '../../common/utils/errors';
-import { InfoShare, ShareType } from '../../common/entity/InfoShare';
+import { InfoShare } from '../../common/entity/InfoShare';
 import { decryptFile } from '../../common/utils/encrypt';
+import { ShareType } from '../../common/enums/app';
 
 export default {
   create: async (ctx: Context, next: Next) => {
@@ -13,6 +14,11 @@ export default {
     const newInfoShare = new InfoShare();
     newInfoShare.personalInfo = ctx.personalInfo;
     newInfoShare.type = ctx.request.body.type;
+    if (newInfoShare.type === ShareType.multi && !ctx.request.body.expiryDate) {
+      throw new BadRequestError(
+        'expiryDate is required for multi share option'
+      );
+    }
     newInfoShare.expiryDate = ctx.request.body.expiryDate;
     const shareToken = newInfoShare.getShareToken(
       ctx.request.body.encryptionKey

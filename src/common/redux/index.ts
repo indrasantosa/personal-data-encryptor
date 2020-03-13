@@ -24,5 +24,7 @@ export const getIndexPersonalInfoScreenState = (state: ApplicationRootState) =>
   fromScreen.getIndexPersonalInfoState(state.screens);
 export const getCreatePersonalInfoScreenState = (state: ApplicationRootState) =>
   fromScreen.getCreatePersonalInfoState(state.screens);
+export const getSharePersonalInfoScreenState = (state: ApplicationRootState) =>
+  fromScreen.getSharePersonalInfoState(state.screens);
 
 export default RootReducer;

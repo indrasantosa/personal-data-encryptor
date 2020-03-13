@@ -3,6 +3,7 @@ import { NavLink, Switch, Route } from 'react-router-dom';
 import Navigation from '../../components/Navigation';
 import PersonalInfoPage from './PersonalInfo';
 import PersonalInfoCreatePage from './PersonalInfoCreate';
+import PersonalInfoShare from './PersonalInfoShare';
 
 const Dashboard = () => {
   return (
@@ -24,12 +25,19 @@ const Dashboard = () => {
       <div className='w-full mx-auto object-center flex-1 h-full'>
         <Navigation />
         <Switch>
-          <Route exact path={'/dashboard/personal-info'}>
-            <PersonalInfoPage />
-          </Route>
-          <Route path={'/dashboard/personal-info/create'}>
-            <PersonalInfoCreatePage />
-          </Route>
+          <Route
+            exact
+            path={'/dashboard/personal-info'}
+            component={PersonalInfoPage}
+          ></Route>
+          <Route
+            path={'/dashboard/personal-info/create'}
+            component={PersonalInfoCreatePage}
+          ></Route>
+          <Route
+            path={'/dashboard/personal-info/:infoShareId/share'}
+            component={PersonalInfoShare}
+          ></Route>
         </Switch>
       </div>
     </div>

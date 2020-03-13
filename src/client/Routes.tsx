@@ -9,9 +9,7 @@ const AppRoutes = () => {
       <Route exact path={'/'}>
         <Redirect to='/dashboard/personal-info/create' />
       </Route>
-      <Route path={'/dashboard'}>
-        <Dashboard />
-      </Route>
+      <Route path={'/dashboard'} component={Dashboard}></Route>
     </Switch>
   );
 };

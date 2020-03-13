@@ -8,6 +8,7 @@ import {
   PersonalInfoForm
 } from './types';
 import { APIRoutes } from '../../../enums/routes';
+import { push } from 'react-router-redux';
 
 export const createPersonalInfoRequest = () => ({
   type: CREATE_PERSONAL_INFO_REQUEST
@@ -37,8 +38,8 @@ export const createPersonalInfo = (
       }
     });
     dispatch(createPersonalInfoSuccess(response.data));
+    dispatch(push('/dashboard/personal-info'));
   } catch (e) {
-    console.log(e);
     dispatch(createPersonalInfoFailure());
   }
 };

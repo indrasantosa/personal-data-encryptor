@@ -10,11 +10,7 @@ import {
 import { uuid } from 'uuidv4';
 import { encryptString, decryptString } from '../utils/encrypt';
 import { PersonalInfo } from './PersonalInfo';
-
-export enum ShareType {
-  onetime,
-  multi
-}
+import { ShareType } from '../enums/app';
 
 @Entity()
 export class InfoShare {

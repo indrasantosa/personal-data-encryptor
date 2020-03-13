@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import { useDispatch, useStore, useSelector } from 'react-redux';
 import {
   getPersonalInfo,
-  requestDecryptFile,
   requestDecryptPersonalInfo,
   requestDecryptPersonalFile
 } from '../../../../common/redux/screens/indexPersonalInfo/action';
 import * as fromState from '../../../../common/redux';
+import { push } from 'react-router-redux';
 
 const FxRates = () => {
   const dispatch = useDispatch();
@@ -33,6 +33,9 @@ const FxRates = () => {
       dispatch(requestDecryptPersonalInfo(personalInfoId, input));
     }
   };
+  const goToSharePage = (personalInfoId: string) => e => {
+    dispatch(push(`/dashboard/personal-info/${personalInfoId}/share`));
+  };
 
   useEffect(() => {
     fetchInitialData();
@@ -52,6 +55,18 @@ const FxRates = () => {
           </tr>
         </thead>
         <tbody>
+          {screenState.personalInfos.length === 0 && (
+            <tr>
+              <td
+                colSpan={5}
+                className={'border-gray-500 border p-2 text-center'}
+              >
+                {screenState.isLoading
+                  ? 'Loading Date ...'
+                  : 'There is no result'}
+              </td>
+            </tr>
+          )}
           {screenState.personalInfos.map((entityId: string) => {
             const currentInfo = personalInfos.byId[entityId];
             return (
@@ -92,7 +107,7 @@ const FxRates = () => {
                     className={
                       'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer'
                     }
-                    onClick={() => {}}
+                    onClick={goToSharePage(currentInfo.id)}
                   >
                     Share info
                   </button>

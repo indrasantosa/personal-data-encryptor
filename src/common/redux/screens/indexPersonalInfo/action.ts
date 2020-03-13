@@ -49,7 +49,6 @@ export const requestDecryptPersonalFile = (
     },
     { responseType: 'blob' }
   );
-  console.log(response);
   const url = window.URL.createObjectURL(new Blob([response.data]));
   const link = document.createElement('a');
   link.href = url;
@@ -69,7 +68,7 @@ export const requestDecryptPersonalInfo = (
         encryptionKey
       }
     );
-    alert(JSON.stringify(response.data.secret));
+    alert(JSON.stringify(response.data.data.secret));
   } catch (e) {
     alert(e);
   }
