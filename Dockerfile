@@ -1,16 +1,7 @@
-FROM node:10.16.3 as builder
+FROM node:10.16.3
 WORKDIR /app
 COPY / .
-RUN npm install
-RUN npm run build
-
-
-FROM node:10.16.3 as runner
-WORKDIR /app
-COPY --from=builder /app/package.json .
 RUN npm install -p
-COPY --from=builder /app/build .
-COPY /config/dotenv/production.env ./.env
-
+RUN npm run build
 EXPOSE 3000
-CMD node server/index.js
+CMD ./node_modules/.bin/ts-node ./node_modules/typeorm/cli.js schema:sync && node build/server/index.js
