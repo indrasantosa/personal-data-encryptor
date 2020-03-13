@@ -8,6 +8,7 @@ import {
 } from './types';
 import { personalInfo } from '../../entities/schema';
 import { APIRoutes } from '../../../enums/routes';
+import { getFileNameFromHeader } from '../../../utils/routeUtil';
 
 export const getPersonalInfoRequest = () => ({
   type: LIST_PERSONAL_INFO_REQUEST
@@ -39,8 +40,7 @@ export const getPersonalInfo = ({ page = 1 }: { page: number }) => async (
 
 export const requestDecryptPersonalFile = (
   infoId: string,
-  encryptionKey: string,
-  fileName: string
+  encryptionKey: string
 ) => async (dispatch: Dispatch) => {
   const response = await Axios.post(
     `${APIRoutes.personalInfo}/${infoId}/file`,
@@ -52,7 +52,8 @@ export const requestDecryptPersonalFile = (
   const url = window.URL.createObjectURL(new Blob([response.data]));
   const link = document.createElement('a');
   link.href = url;
-  link.setAttribute('download', fileName); //or any other extension
+  const downloadedFileName = getFileNameFromHeader(response.headers);
+  link.setAttribute('download', downloadedFileName); //or any other extension
   document.body.appendChild(link);
   link.click();
 };

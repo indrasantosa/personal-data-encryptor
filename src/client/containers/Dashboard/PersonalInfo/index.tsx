@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useStore, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   getPersonalInfo,
   requestDecryptPersonalInfo,
@@ -8,7 +8,7 @@ import {
 import * as fromState from '../../../../common/redux';
 import { push } from 'react-router-redux';
 
-const FxRates = () => {
+const PersonalInfo = () => {
   const dispatch = useDispatch();
   const screenState = useSelector(fromState.getIndexPersonalInfoScreenState);
   const personalInfos = useSelector(fromState.getEntityPersonalInfo);
@@ -16,14 +16,11 @@ const FxRates = () => {
   const fetchInitialData = (page = 1) => {
     dispatch(getPersonalInfo({ page }));
   };
-  const requestDecryptFile = (
-    personalInfoId: string,
-    fileName: string
-  ) => e => {
+  const requestDecryptFile = (personalInfoId: string) => e => {
     e.preventDefault();
     const input = window.prompt('Please enter your encryption key');
     if (input) {
-      dispatch(requestDecryptPersonalFile(personalInfoId, input, fileName));
+      dispatch(requestDecryptPersonalFile(personalInfoId, input));
     }
   };
   const requestDecryptInfo = (personalInfoId: string) => e => {
@@ -39,6 +36,7 @@ const FxRates = () => {
 
   useEffect(() => {
     fetchInitialData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -96,10 +94,7 @@ const FxRates = () => {
                     className={
                       'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer mr-2 mb-2'
                     }
-                    onClick={requestDecryptFile(
-                      currentInfo.id,
-                      currentInfo.file.fileName
-                    )}
+                    onClick={requestDecryptFile(currentInfo.id)}
                   >
                     Decrypt File
                   </button>
@@ -121,4 +116,4 @@ const FxRates = () => {
   );
 };
 
-export default FxRates;
+export default PersonalInfo;

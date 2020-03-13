@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { createPersonalInfo } from '../../../../common/redux/screens/createPersonalInfo/action';
 
-const FxRates = () => {
+const PersonalInfoCreate = () => {
   const dispatch = useDispatch();
 
   const [attachedFile, setAttachedFile] = useState(undefined);
@@ -146,4 +146,4 @@ const FxRates = () => {
   );
 };
 
-export default FxRates;
+export default PersonalInfoCreate;

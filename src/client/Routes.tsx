@@ -1,6 +1,5 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import Login from './containers/Login';
 import Dashboard from './containers/Dashboard';
 
 const AppRoutes = () => {

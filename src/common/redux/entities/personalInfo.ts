@@ -8,7 +8,7 @@ export interface PersonalInfoState {
   };
 }
 
-export const INITIAL_STATE = {
+export const INITIAL_STATE: PersonalInfoState = {
   allIds: [],
   byId: {}
 };
@@ -23,7 +23,7 @@ const byId = (state = INITIAL_STATE.byId, action: any) => {
   return state;
 };
 
-const allIds = (state = INITIAL_STATE.allIds, action: any) => {
+const allIds = (state = INITIAL_STATE.allIds, action: any): Array<string> => {
   return [
     ...state,
     ...Object.keys(action.response?.entities?.personalInfos || {})

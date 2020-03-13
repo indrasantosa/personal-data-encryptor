@@ -4,7 +4,6 @@ import {
   CREATE_PERSONAL_INFO_REQUEST,
   CREATE_PERSONAL_INFO_SUCCESS,
   CREATE_PERSONAL_INFO_FAILURE,
-  CreatePersonalInfoPageTypes,
   PersonalInfoForm
 } from './types';
 import { APIRoutes } from '../../../enums/routes';

@@ -19,7 +19,10 @@ export default {
         'expiryDate is required for multi share option'
       );
     }
-    newInfoShare.expiryDate = ctx.request.body.expiryDate;
+    if (newInfoShare.type === ShareType.multi) {
+      newInfoShare.expiryDate = ctx.request.body.expiryDate;
+    }
+
     const shareToken = newInfoShare.getShareToken(
       ctx.request.body.encryptionKey
     );
@@ -130,7 +133,11 @@ export default {
   verifyDownloadExpiry: async (ctx: Context, next: Next) => {
     const shareInfo: InfoShare = ctx.shareInfo;
 
-    if (shareInfo.expiryDate && shareInfo.expiryDate < new Date()) {
+    if (
+      shareInfo.type === ShareType.multi &&
+      shareInfo.expiryDate &&
+      shareInfo.expiryDate < new Date()
+    ) {
       throw new BadRequestError('Share link has been expired');
     }
     if (shareInfo.fileDownloadUsed) {

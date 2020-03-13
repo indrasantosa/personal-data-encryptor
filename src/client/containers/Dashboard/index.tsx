@@ -4,6 +4,7 @@ import Navigation from '../../components/Navigation';
 import PersonalInfoPage from './PersonalInfo';
 import PersonalInfoCreatePage from './PersonalInfoCreate';
 import PersonalInfoShare from './PersonalInfoShare';
+import PersonalInfoRetrieveShared from './PersonalInfoRetrieveShared';
 
 const Dashboard = () => {
   return (
@@ -37,6 +38,11 @@ const Dashboard = () => {
           <Route
             path={'/dashboard/personal-info/:infoShareId/share'}
             component={PersonalInfoShare}
+          ></Route>
+          <Route
+            path={'/dashboard/retrieve-shared'}
+            strict={false}
+            component={PersonalInfoRetrieveShared}
           ></Route>
         </Switch>
       </div>
