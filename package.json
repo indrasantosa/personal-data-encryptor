@@ -116,16 +116,14 @@
     "workbox-webpack-plugin": "4.3.1"
   },
   "scripts": {
-    "start": "npm run env:development && ./node_modules/.bin/webpack --config config/webpack/webpack.server.config.js",
-    "client:start": "node scripts/start.js",
-    "test": "node scripts/test.js",
+    "start": "NODE_ENV=development ./node_modules/.bin/webpack --config config/webpack/webpack.server.config.js",
     "build": "npm run client:build && npm run server:build",
+    "test": "./node_modules/.bin/ava",
     "client:build": "node scripts/build.js",
+    "server:build": "npm run env:production && ./node_modules/.bin/webpack --config config/webpack/webpack.server.config.js",
     "docker:build": "docker build -t kynec-frontend .",
     "server:start": "NODE_ENV=development node --inspect=5858 -r ./scripts/serverStart.js ./src/server/index.ts",
-    "server:start:dev": "NODE_ENV=development ./node_modules/.bin/webpack --config config/webpack/webpack.server.config.js",
     "server:run:dev": "NODE_ENV=development nodemon ./build/server/index.js",
-    "server:build": "npm run env:production && ./node_modules/.bin/webpack --config config/webpack/webpack.server.config.js",
     "env:development": "cp ./config/dotenv/development.env .env",
     "env:production": "cp ./config/dotenv/production.env .env",
     "test:db": "node -r ts-node/register --project ./config/tsconfig/tsconfig.server.json ./scripts/dbTest.ts"
