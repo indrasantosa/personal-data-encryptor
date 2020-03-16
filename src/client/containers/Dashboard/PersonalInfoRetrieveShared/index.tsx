@@ -6,6 +6,7 @@ import {
   requestDecryptPersonalSharedInfo,
   requestDecryptPersonalSharedFile
 } from '../../../../common/redux/screens/retrieveSharedPersonalInfo/action';
+import Button from '../../../components/Button';
 
 const PersonalInfoRetrieveShared = () => {
   const dispatch = useDispatch();
@@ -37,14 +38,7 @@ const PersonalInfoRetrieveShared = () => {
 
   return (
     <div className={'w-full p-8'}>
-      <button
-        className={
-          'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer mr-2 mb-2'
-        }
-        onClick={backToPersonalInfoList}
-      >
-        Back to List
-      </button>
+      <Button onClick={backToPersonalInfoList}>Back to List</Button>
       <h2
         className={'text-2xl mb-6'}
       >{`Get Shared Personal info: ${queryParams.get('shareId')}`}</h2>
@@ -57,23 +51,12 @@ const PersonalInfoRetrieveShared = () => {
             >
               Get shared documents
             </label>
-            <button
-              className={
-                'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer mr-2 mb-2'
-              }
-              onClick={requestSharedInfo}
-            >
+            <Button onClick={requestSharedInfo} className={'mr-2 mb-2'}>
               Request Personal Info
-            </button>
-
-            <button
-              className={
-                'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer  mr-2 mb-2'
-              }
-              onClick={requestSharedFile}
-            >
+            </Button>
+            <Button onClick={requestSharedFile} className={'mr-2 mb-2'}>
               Download Personal File
-            </button>
+            </Button>
             <p className='text-gray-600 text-xs italic'>
               Depends on the share type, your request may be rejected
             </p>

@@ -16,6 +16,7 @@ import {
 } from '../../../../common/redux/screens/sharePersonalInfo/action';
 import { getSharePersonalInfoScreenState } from '../../../../common/redux';
 import { ShareType } from '../../../../common/enums/app';
+import Button from '../../../components/Button';
 
 interface PersonalInfoRetrieveSharedProps {
   infoShareId: string;
@@ -68,14 +69,7 @@ const PersonalInfoShare = ({
 
   return (
     <div className={'w-full p-8'}>
-      <button
-        className={
-          'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer mr-2 mb-2'
-        }
-        onClick={backToPersonalInfoList}
-      >
-        Back to List
-      </button>
+      <Button onClick={backToPersonalInfoList}>Back to List</Button>
       <h2
         className={'text-2xl mb-6'}
       >{`Personal Info Share: ${match.params.infoShareId}`}</h2>

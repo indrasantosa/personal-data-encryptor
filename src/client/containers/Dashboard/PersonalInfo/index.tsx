@@ -1,12 +1,13 @@
 import React, { useEffect, MouseEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { push } from 'react-router-redux';
 import {
   getPersonalInfo,
   requestDecryptPersonalInfo,
   requestDecryptPersonalFile
 } from '../../../../common/redux/screens/indexPersonalInfo/action';
 import * as fromState from '../../../../common/redux';
-import { push } from 'react-router-redux';
+import Button from '../../../components/Button';
 
 const PersonalInfo = () => {
   const dispatch = useDispatch();
@@ -82,30 +83,21 @@ const PersonalInfo = () => {
                   {currentInfo.createDate}
                 </td>
                 <td className={'border-gray-500 border p-2'}>
-                  <button
-                    className={
-                      'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer mr-2 mb-2'
-                    }
+                  <Button
                     onClick={requestDecryptInfo(currentInfo.id)}
+                    className={'mr-2 mb-2'}
                   >
                     Decrypt Data
-                  </button>
-                  <button
-                    className={
-                      'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer mr-2 mb-2'
-                    }
+                  </Button>
+                  <Button
                     onClick={requestDecryptFile(currentInfo.id)}
+                    className={'mr-2 mb-2'}
                   >
                     Decrypt File
-                  </button>
-                  <button
-                    className={
-                      'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer'
-                    }
-                    onClick={goToSharePage(currentInfo.id)}
-                  >
+                  </Button>
+                  <Button onClick={goToSharePage(currentInfo.id)}>
                     Share info
-                  </button>
+                  </Button>
                 </td>
               </tr>
             );
